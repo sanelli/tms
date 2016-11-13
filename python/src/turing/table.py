@@ -2,9 +2,6 @@ import collections
 import copy
 import xml.etree.ElementTree as ET
 from turing.direction import dir2str, str2dir
-
-import sys
-sys.path.append("..")
 from utils.tmxml import TmXmlContsants
 
 TableEntryKey = collections.namedtuple("TableEntryKey", ["state", "symbol"])
