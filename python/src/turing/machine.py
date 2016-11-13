@@ -14,19 +14,21 @@ class TuringMachine(object):
         self._tape = deepcopy(self._initialTape)
 
     def step(self):
-        if self.termiated:
+        if self.terminated:
             raise RuntimeError("Cannot step because turing machine is already on a terminal status.")
         symbol = self._tape.get()
         action = self._table << symbol
         self._tape.set(action.symbol)
         self._tape.shift(action.direction)
 
-    @property
-    def terminated(self):
-        return self._table.isOnTerminalState
-
     def run(self):
         while not self.terminated:
             self.step()
-        
-    
+
+    @property
+    def tape(self):
+        return self._tape
+
+    @property
+    def terminated(self):
+        return self._table.isOnTerminalState

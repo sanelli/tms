@@ -164,7 +164,7 @@ class InfiniteBidirectionalList(object):
         return other
 
     def __deepcopy__(self, memo=None):
-        otherTape = InfiniteBidirectionalList()
-        otherTape._pos = deepcopy(self._pos, memo)
-        otherTape._neg = deepcopy(self._neg, memo)
+        other = InfiniteBidirectionalList()
+        other._pos = deepcopy(self._pos, memo)
+        other._neg = deepcopy(self._neg, memo)
         return other

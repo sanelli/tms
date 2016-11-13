@@ -15,11 +15,11 @@ class Tape(object):
         return self._tape[self._cursor]
 
     def shift(self, direction):
-        if direction == Direction.LEFT:
+        if direction == Direction.left:
             self.shiftLeft()
-        elif direction == Direction.RIGHT:
+        elif direction == Direction.right:
             self.shiftRight()
-        elif direction == Direction.DONT_MOVE:
+        elif direction == Direction.none:
             pass
         else:
             raise ValueError("Unknown direction")
@@ -41,13 +41,19 @@ class Tape(object):
         self._tape.strip()
 
     def __str__(self):
-        upper = "".join(self._tape)
-        cursorIndex = self._tape.getZeroBasedIndex(self._cursor)
-        lower = " " * (cursorIndex - 1) + "^"
-        return "\n".join([upper, lower])
+        return  "|{}|".format("|".join(self._tape))
 
-    def tapeAsStr(self, serializeSymbol = str):
-        return  "|{}|".format("|".join([serializeSymbol(symbol) for symbol self._tape]))
+    def asPlainString(self, serializeSymbol = str, addCursor = False):
+        result = "".join([serializeSymbol(symbol) for symbol in self._tape])
+        if addCursor:
+            cursorIndex = self._tape.getZeroBasedIndex(self._cursor)
+            lower = " " * (cursorIndex - 1) + "^"
+            result = "\n".join([result, lower])
+        return result
+
+    @property
+    def plain(self):
+        return self.asPlainString()
 
     def __copy__(self):
         other = Tape()

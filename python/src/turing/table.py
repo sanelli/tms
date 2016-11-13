@@ -50,7 +50,7 @@ class Table(object):
     
     @property
     def knownKeys(self):
-        return set(self._table.keys)
+        return set(self._table.keys())
 
     @property
     def missingKeys(self):
@@ -75,7 +75,7 @@ class StatefulTable(Table):
         if len(terminalStates) <= 0:
             raise ValueError("At least one terminal state must be provided")
 
-        super().__init__(self, states, symbols)
+        super().__init__(states, symbols)
         self._initiState = initialState
         self._currentState = copy.deepcopy(initialState)
         self._terminalStates = copy.deepcopy(terminalStates)
@@ -103,7 +103,7 @@ class StatefulTable(Table):
         result += "initialState={}".format(self._initiState)
         result += ", currentState={}".format(self._currentState)
         result += ", terminalStates=[{}]".format(", ".join([ str(s) for s in self._terminalStates ]))
-        result += ", table={}".format(super().__str__(self))
+        result += ", table={}".format(super().__str__())
         result = "}"
         return result
 
@@ -170,6 +170,9 @@ class StatefulTable(Table):
             nullValue = symbolsTag.get(TmXmlContsants.ATTRIBUTE_NULL_VALUE)
         symbols = [ deserializeSymbol(symbol) for symbol in symbolsTag.text ]
 
+        if not nullValue in symbols:
+            symbols.append(nullValue)
+
         # States
         initState = None
         terminalStates = []
@@ -183,13 +186,13 @@ class StatefulTable(Table):
             else:
                 states.append(state)
 
-            if TmXmlContsants.ATTRIBUTE_START in state.attrib:
+            if TmXmlContsants.ATTRIBUTE_START in stateTag.attrib:
                 if initState != None:
                     raise ValueError("Malformed XML: duplicated initial state")
                 else:
                     initState = state
 
-            if TmXmlContsants.ATTRIBUTE_HALT in state.attrib:
+            if TmXmlContsants.ATTRIBUTE_HALT in stateTag.attrib:
                 terminalStates.append(state)
 
         if initState == None:
@@ -198,15 +201,15 @@ class StatefulTable(Table):
         table = StatefulTable(states, symbols, initState, terminalStates, nullValue)
 
         tagTable = root.find(TmXmlContsants.TAG_TABLE)
-        for tableEntry in tagTable.findall(TmXmlContsants.TAG_ENTRY)
-            keyTag = tagEntry.find(TmXmlContsants.TAG_KEY)
+        for tableEntryTag in tagTable.findall(TmXmlContsants.TAG_ENTRY):
+            keyTag = tableEntryTag.find(TmXmlContsants.TAG_KEY)
             key = TableEntryKey(state = keyTag.get(TmXmlContsants.ATTRIBUTE_KEY_STATE), 
                                 symbol = keyTag.get(TmXmlContsants.ATTRIBUTE_KEY_SYMBOL))
             
-            valueTag = tagEntry.find(TmXmlContsants.TAG_VALUE)
-            value = TableEntryValue(state = keyTag.get(TmXmlContsants.ATTRIBUTE_VALUE_STATE),
-                                    symbol = keyTag.get(TmXmlContsants.ATTRIBUTE_VALUE_SYMBOL),
-                                    direction = str2dir(keyTag.get(TmXmlContsants.ATTRIBUTE_VALUE_DIRECTION)))
+            valueTag = tableEntryTag.find(TmXmlContsants.TAG_VALUE)
+            value = TableEntryValue(state = valueTag.get(TmXmlContsants.ATTRIBUTE_VALUE_STATE),
+                                    symbol = valueTag.get(TmXmlContsants.ATTRIBUTE_VALUE_SYMBOL),
+                                    direction = str2dir(valueTag.get(TmXmlContsants.ATTRIBUTE_VALUE_DIRECTION)))
 
             table[key] = value
 
