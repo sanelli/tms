@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<turing-machine version="0.1">
+	<!-- This Turing Machine (TM) determines if a word is a palindrome.
+	     A palindrome is a word which reads the same backwards or forwards. 
+	     An example is 'aibohphobia' (The fear of palindromes.)
+	     
+	     The Turing machine assumes that the first (i.e., leftmost) 
+	     symbol on the tape is the leftmost symbol of the word. If the
+	     TM halts with no symbols left on the tape the original word was a
+	     palindrome.
+	     
+	     If the first symbol is a blank the TM will halt immediatly. So, 
+	     if the input tape is " 1221", then the Turing machine will 
+	     assume that tape does not contain any input and halt, leaving an
+	     unprocessed word on the tape.
+	     
+	     This Turing Machine Markup Language (TMML) document complies
+	     with the DTD for TMML, which is available at
+	     http://www.unidex.com/turing/tmml.dtd and with the XML Schema for
+	     TMML which is not yet available.
+	     
+	     This Turing machine can be executed by an XSLT stylesheet that is
+	     available at http://www.unidex.com/turing/utm.xsl. This stylesheet
+	     is a Universal Turing Machine.
+	     
+	     The following Instant Saxon command will execute the Turing machine
+	     described by this TMML document using the utm.xsl stylesheet:
+	     
+	     saxon palindrom_tm.xml utm.xsl tape=102201
+	     
+	     Developed by Daan Wanrooy.
+	
+	     Please email any comments about this TMML document to
+	     daan.wanrooy@gmail.com.
+	-->
+	
+	<!-- The symbols used are 0, 1, 2. The blank symbol is ' ' (default) -->
+	<symbols>012</symbols>
+	
+	<states>
+		<!-- In the start state the TM is ready to check if the
+		     symbols on the tape form a palindrome. We will call the
+		     non-blank symbols on the tape a word.
+		     In this state the TM will consume the first symbol and
+		     remembers which one it was.
+		-->
+		<state start="yes">start</state>
+		
+		<!-- In the moveRight* states the first symbol is remembered. 
+		     The TM moves to the end of the word without altering it.
+		-->
+		<state>moveRight0</state>
+		<state>moveRight1</state>
+		<state>moveRight2</state>
+		
+		<!-- In the check* states the last symbol of the word is checked
+		     against the first. If they are the same the TM moves to
+		     the beginning of the word and start the whole process over.
+		     If the differ the TM halts, leaving the unprocessed word
+		     on the tape indicating an error.
+		-->
+		<state>check0</state>
+		<state>check1</state>
+		<state>check2</state>
+		
+		<!-- In the moveLeft state the TM moves to the beginning of the
+		     word.
+		-->
+		<state>moveLeft</state>
+		
+		<state halt="yes">halt</state>		
+	</states>
+	
+	<transition-function>
+		<!-- When in start state:
+		     If we are not yet finished read first symbol and check if 
+		     the last symbol is the same. 
+		-->
+		
+		<!-- The first symbol is 0, check if last symbol is 0.
+		-->
+		<mapping>
+			<from current-state="start" current-symbol="0" />
+			<to next-state="moveRight0" next-symbol=" " movement="right" />
+		</mapping>
+	
+		<!-- The first symbol is 1, check if last symbol is 1.
+		-->
+		<mapping>
+			<from current-state="start" current-symbol="1" />
+			<to next-state="moveRight1" next-symbol=" " movement="right" />
+		</mapping>
+
+		<!-- The first symbol is 2, check if last symbol is 2.
+		-->
+		<mapping>
+			<from current-state="start" current-symbol="2" />
+			<to next-state="moveRight2" next-symbol=" " movement="right" />
+		</mapping>
+		
+		<!-- The first symbol is blank so we are done.
+		-->
+		<mapping>
+			<from current-state="start" current-symbol=" " />
+			<to next-state="halt" next-symbol=" " movement="none" />
+		</mapping>
+		
+		<!-- When in moveRight* state:
+		     leave symbols on the tape until end of word.
+		-->
+		
+		<!-- moveRight0 -->
+		<!-- reading 0 writing 0 move right -->
+		<mapping>
+			<from current-state="moveRight0" current-symbol="0" />
+			<to next-state="moveRight0" next-symbol="0" movement="right" />
+		</mapping>
+	
+		<!-- reading 1 writing 1 move right -->
+		<mapping>
+			<from current-state="moveRight0" current-symbol="1" />
+			<to next-state="moveRight0" next-symbol="1" movement="right" />
+		</mapping>
+	
+		<!-- reading 2 writing 2 move right -->
+		<mapping>
+			<from current-state="moveRight0" current-symbol="2" />
+			<to next-state="moveRight0" next-symbol="2" movement="right" />
+		</mapping>
+		
+		<!-- reading blank writing blank move left state check0
+		-->
+		<mapping>
+			<from current-state="moveRight0" current-symbol=" " />
+			<to next-state="check0" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- moveRight1 -->
+		<!-- reading 0 writing 0 move right -->
+		<mapping>
+			<from current-state="moveRight1" current-symbol="0" />
+			<to next-state="moveRight1" next-symbol="0" movement="right" />
+		</mapping>
+	
+		<!-- reading 1 writing 1 move right -->
+		<mapping>
+			<from current-state="moveRight1" current-symbol="1" />
+			<to next-state="moveRight1" next-symbol="1" movement="right" />
+		</mapping>
+	
+		<!-- reading 2 writing 2 move right -->
+		<mapping>
+			<from current-state="moveRight1" current-symbol="2" />
+			<to next-state="moveRight1" next-symbol="2" movement="right" />
+		</mapping>
+		
+		<!-- reading blank writing blank move left state check1
+		-->
+		<mapping>
+			<from current-state="moveRight1" current-symbol=" " />
+			<to next-state="check1" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- moveRight2 -->
+		<!-- reading 0 writing 0 move right -->
+		<mapping>
+			<from current-state="moveRight2" current-symbol="0" />
+			<to next-state="moveRight2" next-symbol="0" movement="right" />
+		</mapping>
+	
+		<!-- reading 1 writing 1 move right -->
+		<mapping>
+			<from current-state="moveRight2" current-symbol="1" />
+			<to next-state="moveRight2" next-symbol="1" movement="right" />
+		</mapping>
+	
+		<!-- reading 2 writing 2 move right -->
+		<mapping>
+			<from current-state="moveRight2" current-symbol="2" />
+			<to next-state="moveRight2" next-symbol="2" movement="right" />
+		</mapping>
+		
+		<!-- reading blank writing blank move left state check2
+		-->
+		<mapping>
+			<from current-state="moveRight2" current-symbol=" " />
+			<to next-state="check2" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- When in check* state:
+		     If the last symbol equals the first symbol erase it and 
+		     move to new first symbol. If the two symbols differ, stop.
+		     
+		     special case:
+		     If the word had an odd length, there could be no non-blank
+		     symbol left. In that case halt.
+		-->
+		
+		<!-- check0 -->
+		<!-- read 0. This is ok, check the rest of the word. -->
+		<mapping>
+			<from current-state="check0" current-symbol="0" />
+			<to next-state="moveLeft" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- read 1. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check0" current-symbol="1" />
+			<to next-state="halt" next-symbol="1" movement="none" />
+		</mapping>
+		
+		<!-- read 2. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check0" current-symbol="2" />
+			<to next-state="halt" next-symbol="1" movement="none" />
+		</mapping>
+		
+		<!-- read ' '. This is ok. stop executing -->
+		<mapping>
+			<from current-state="check0" current-symbol=" " />
+			<to next-state="halt" next-symbol=" " movement="none" />
+		</mapping>
+		
+		<!-- check1 -->
+		<!-- read 0. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check1" current-symbol="0" />
+			<to next-state="halt" next-symbol="0" movement="none" />
+		</mapping>
+		
+		<!-- read 1. This is ok, check the rest of the word. -->
+		<mapping>
+			<from current-state="check1" current-symbol="1" />
+			<to next-state="moveLeft" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- read 2. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check1" current-symbol="2" />
+			<to next-state="halt" next-symbol="2" movement="none" />
+		</mapping>
+		
+		<!-- read ' '. This is ok. stop executing -->
+		<mapping>
+			<from current-state="check1" current-symbol=" " />
+			<to next-state="halt" next-symbol=" " movement="none" />
+		</mapping>
+
+		<!-- check2 -->
+		<!-- read 0. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check2" current-symbol="0" />
+			<to next-state="halt" next-symbol="0" movement="none" />
+		</mapping>
+		
+		<!-- read 1. This is wrong, stop executing -->
+		<mapping>
+			<from current-state="check2" current-symbol="1" />
+			<to next-state="halt" next-symbol="1" movement="none" />
+		</mapping>
+		
+		<!-- read 2. This is ok, check the rest of the word. -->
+		<mapping>
+			<from current-state="check2" current-symbol="2" />
+			<to next-state="moveLeft" next-symbol=" " movement="left" />
+		</mapping>
+		
+		<!-- read ' '. This is ok. stop executing -->
+		<mapping>
+			<from current-state="check2" current-symbol=" " />
+			<to next-state="halt" next-symbol=" " movement="none" />
+		</mapping>
+
+		<!-- when in moveLeft state:
+		     move all the way up to the first symbol leaving the tape
+		     undisterbed and start over.
+		-->
+				
+		<!-- read 0 write 0 move left -->
+		<mapping>
+			<from current-state="moveLeft" current-symbol="0" />
+			<to next-state="moveLeft" next-symbol="0" movement="left" />
+		</mapping>
+		
+				
+		<!-- read 1 write 1 move left -->
+		<mapping>
+			<from current-state="moveLeft" current-symbol="1" />
+			<to next-state="moveLeft" next-symbol="1" movement="left" />
+		</mapping>
+		
+				
+		<!-- read 2 write 2 move left -->
+		<mapping>
+			<from current-state="moveLeft" current-symbol="2" />
+			<to next-state="moveLeft" next-symbol="2" movement="left" />
+		</mapping>
+
+		<!-- read blank write blank move right state start -->
+		<mapping>
+			<from current-state="moveLeft" current-symbol=" " />
+			<to next-state="start" next-symbol=" " movement="right" />
+		</mapping>
+
+	</transition-function>
+
+</turing-machine>
