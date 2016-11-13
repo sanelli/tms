@@ -14,7 +14,7 @@ class InfiniteList(object):
         else:
             iIndex = -index + self._startIndex
         if (iIndex < 0) or (not self._infinite and iIndex >= len(self)):
-            raise IndexError("Invalid index {index}".format(index=index))
+            raise IndexError("Invalid index {index} generates inner index {iIndex}".format(index=index, iIndex = iIndex))
         return iIndex
 
     def _int2Ext(self, index):
@@ -83,7 +83,7 @@ class InfiniteList(object):
         other._list = copy(self._list)
         other._nullValue = copy(self._nullValue)
         other._startIndex = self._startIndex
-        other.__increasingIndex = self._increasingIndex
+        other._increasingIndex = self._increasingIndex
         other._infinite = self._infinite
         return other
 
@@ -92,7 +92,7 @@ class InfiniteList(object):
         other._list = deepcopy(self._list, memo)
         other._nullValue = deepcopy(self._nullValue, memo)
         other._startIndex = self._startIndex
-        other.__increasingIndex = self._increasingIndex
+        other._increasingIndex = self._increasingIndex
         other._infinite = self._infinite
         return other
 
