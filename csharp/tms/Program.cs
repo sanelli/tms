@@ -1,6 +1,7 @@
 ﻿using System;
+using com.tms.datastruct;
 
-namespace tms
+namespace com.tms
 {
     class Program
     {
