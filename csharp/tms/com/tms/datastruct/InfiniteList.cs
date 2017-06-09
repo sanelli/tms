@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace com.tms.datastruct {
    class InfiniteList<T> {
@@ -7,6 +8,13 @@ namespace com.tms.datastruct {
       private int _startIndex = 0;
       private T _nullValue = default(T);
       private bool _increasing = false;
+
+      public T Null => _nullValue;
+      public int StartIndex => _startIndex;
+      public bool Increasing => _increasing;
+
+      public int MinIndex => _increasing ? IntToExt(0) : IntToExt(_list.Count() - 1);
+      public int MaxIndex => _increasing ? IntToExt(_list.Count() - 1) : IntToExt(0);
 
       public InfiniteList(int startIndex = 0, T nullValue = default(T), bool increase = true){
          _list = new List<T>();
@@ -36,8 +44,34 @@ namespace com.tms.datastruct {
       }
 
       private void Extend(int size) { 
-         while(_list.Count < size) 
-         _list.Add(_nullValue);
+         while(_list.Count() < size) 
+            Append(_nullValue);
+      }
+
+      private int ExtendByExtIndex(int oIndex){
+         var iIndex = ExtToInt(oIndex); 
+            if(iIndex >= _list.Count())
+               Extend(iIndex + 1);
+         return iIndex;
+      }
+
+      public void Append(T element) { 
+         _list.Add(element);
+      }
+
+      public void Strip() {
+         while(_list.Count() > 0 && _list.Last().Equals(Null))
+            _list.RemoveAt(_list.Count()-1);
+      }
+
+      public T this[int index]
+      {
+         get { return _list[ExtendByExtIndex(index)]; }
+         set {  _list[ExtendByExtIndex(index)] = value; }
+      }
+
+      public void RemoveAt(int index){
+         _list.RemoveAt(ExtendByExtIndex(index));
       }
    }
 }
