@@ -79,6 +79,10 @@ namespace com.tms.datastruct {
          return _list.Count();
       }
 
+      public void Clear() {
+            _list.Clear();
+      }
+
       public IEnumerator<T> GetEnumerator(){ return new TmsListEnumerator<T>(this); }
       IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
    }

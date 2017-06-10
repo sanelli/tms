@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace com.tms.datastruct {
 
-   public class InfiniteBiderctionalList<T> : ITmsList<T> {
+   public class InfiniteBidirctionalList<T> : ITmsList<T> {
       private InfiniteList<T> _negative;
       private InfiniteList<T> _positive;
 
       public int MinIndex => _negative.Count() == 0 ? _positive.MinIndex : _negative.MinIndex;
       public int MaxIndex => _positive.Count() == 0 ? _negative.MaxIndex : _positive.MaxIndex;
 
-      public InfiniteBiderctionalList(T nullValue) { 
+      public T Null => _positive.Null;
+
+      public InfiniteBidirctionalList(T nullValue) { 
          _positive = new InfiniteList<T>(0, nullValue, true);
          _negative = new InfiniteList<T>(-1, nullValue, false);
       }
@@ -43,6 +45,11 @@ namespace com.tms.datastruct {
 
       public int Count(){
          return _negative.Count() + _positive.Count();
+      }
+
+      public void Clear(){
+         _negative.Clear();
+         _positive.Clear();
       }
 
       public IEnumerator<T> GetEnumerator(){ return new TmsListEnumerator<T>(this); }

@@ -10,6 +10,7 @@ namespace com.tms.datastruct {
       int Count();
       int MinIndex { get; }
       int MaxIndex { get; }
+      void Clear();
    }
 
 }
