@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace com.tms.datastruct {
-   class InfiniteList<T> {
+   public class InfiniteList<T> : ITmsList<T>{
       private List<T> _list;
       private int _startIndex = 0;
       private T _nullValue = default(T);
@@ -73,6 +74,13 @@ namespace com.tms.datastruct {
       public void RemoveAt(int index){
          _list.RemoveAt(ExtendByExtIndex(index));
       }
+
+      public int Count(){
+         return _list.Count();
+      }
+
+      public IEnumerator<T> GetEnumerator(){ return new TmsListEnumerator<T>(this); }
+      IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
    }
 }
 
