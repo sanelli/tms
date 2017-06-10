@@ -7,7 +7,6 @@ namespace com.tms.turing{
       string ToString(T item);
       char Separator { get; }
       T FromString(string s);
-
    }
 
    public class CharTapeItemSerializer : TapeItemSerializer<char> { 
