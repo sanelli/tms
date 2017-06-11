@@ -2,14 +2,14 @@ using System;
 
 namespace com.tms.turing{
 
-   public interface TapeItemSerializer<T> {
+   public interface SymbolSerializer<TSymbol> {
 
-      string ToString(T item);
+      string ToString(TSymbol item);
       char Separator { get; }
-      T FromString(string s);
+      TSymbol FromString(string s);
    }
 
-   public class CharTapeItemSerializer : TapeItemSerializer<char> { 
+   public class CharSymbolSerializer : SymbolSerializer<char> { 
       public string ToString(char c)
       { 
          if(c == Separator)
@@ -20,7 +20,7 @@ namespace com.tms.turing{
       public char FromString(string s) { return s[0]; }
    }
 
-   public class StringTapeItemSerializer : TapeItemSerializer<string> { 
+   public class StringSymbolSerializer : SymbolSerializer<string> { 
       public string ToString(string c)
       { 
          if(c.Contains(Separator.ToString()))
@@ -31,13 +31,13 @@ namespace com.tms.turing{
       public string FromString(string s) { return s; }
    }
 
-   public class IntTapeItemSerializer : TapeItemSerializer<int> { 
+   public class IntSymbolSerializer : SymbolSerializer<int> { 
       public string ToString(int c){ return c.ToString(); }
       public char Separator => '|';
       public int FromString(string s) { return int.Parse(s); }
    }
 
-   public class LongTapeItemSerializer : TapeItemSerializer<long> { 
+   public class LongSymbolSerializer : SymbolSerializer<long> { 
       public string ToString(long c){ return c.ToString(); }
       public char Separator => '|';
       public long FromString(string s) { return long.Parse(s); }

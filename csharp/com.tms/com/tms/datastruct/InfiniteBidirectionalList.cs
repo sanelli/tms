@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace com.tms.datastruct {
 
    public class InfiniteBidirctionalList<T> : ITmsList<T> {
-      private InfiniteList<T> _negative;
-      private InfiniteList<T> _positive;
+      private readonly InfiniteList<T> _negative;
+      private readonly InfiniteList<T> _positive;
 
       public int MinIndex => _negative.Count() == 0 ? _positive.MinIndex : _negative.MinIndex;
       public int MaxIndex => _positive.Count() == 0 ? _negative.MaxIndex : _positive.MaxIndex;

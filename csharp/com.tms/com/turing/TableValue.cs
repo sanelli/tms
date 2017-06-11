@@ -2,7 +2,7 @@ namespace com.tms.turing {
 
    public class TableValue<TState, TSymbol> : TableKey<TState, TSymbol> {
 
-      protected MoveAction _action;
+      private readonly MoveAction _action;
 
       public TableValue(TState state, TSymbol symbol, MoveAction action) : base(state,symbol) { 
          _action = action;

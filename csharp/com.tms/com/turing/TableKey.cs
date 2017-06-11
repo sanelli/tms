@@ -2,8 +2,8 @@ namespace com.tms.turing {
 
    public class TableKey<TState, TSymbol> {
 
-      private TState _state;
-      private TSymbol _symbol;
+      private readonly TState _state;
+      private readonly TSymbol _symbol;
 
       public TableKey(TState state, TSymbol symbol) { 
          _state = state;

@@ -1,16 +1,16 @@
-<?xml version="1.0"?>
-<turing-machine version="0.1">
+<?xml version='1.0'?>
+<turing-machine version='0.1'>
 
 <!-- This Turing machine (TM) adds one to a whole number.
-     For example, if the initial tape is "199", then
-     the final tape will be "200".
+     For example, if the initial tape is '199', then
+     the final tape will be '200'.
 
      The Turing machine assumes that the first (i.e., 
      leftmost) symbol on the tape is the leftmost digit 
      in the number.
 
      If the input tape is completely blank, then the final
-     tape will be "1". So, if the input tape is " 43", 
+     tape will be '1'. So, if the input tape is ' 43', 
      then the Turing machine will assume that tape does not 
      contain a number.
  
@@ -47,7 +47,7 @@
      1. You must include this COPYRIGHT NOTICE and LICENSE
         in all copies or substantial portions of the TMML document.
 
-     2. The TMML document is licensed to the user on an "AS IS" basis.
+     2. The TMML document is licensed to the user on an 'AS IS' basis.
         Unidex Inc. makes no warranties, either express or implied,
         with respect to the TMML document including but not limited to any
         warranty of merchantability or fitness for any particular
@@ -65,7 +65,7 @@
 -->
 
 
-    <!-- The symbols are "0" through "9".
+    <!-- The symbols are '0' through '9'.
     -->
     <symbols>0123456789</symbols>
 
@@ -74,18 +74,18 @@
 	     tape head to the blank symbol to the right of the 
 	     number.
 	-->
-        <state start="yes">go_right</state>
+        <state start='yes'>go_right</state>
 
 	<!-- In the increment state, the Turing machine keeps moving
 	     left and changing 9's to 0's until it finds a digit
-	     other than "9" or a blank symbol. When it finds a digit
-             other than "9" (or a blank symbol, which it treats as
-             the digit "0"), it increments the digit (e.g., replaces
-	     "3" with "4").
+	     other than '9' or a blank symbol. When it finds a digit
+             other than '9' (or a blank symbol, which it treats as
+             the digit '0'), it increments the digit (e.g., replaces
+	     '3' with '4').
 	-->
         <state>increment</state>
 
-        <state halt="yes">stop</state>
+        <state halt='yes'>stop</state>
     </states>
 
     <!-- The transition function for the TM.
@@ -93,114 +93,114 @@
     <transition-function>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="0"/>
-            <to next-state="go_right" next-symbol="0" movement="right"/>
+            <from current-state='go_right' current-symbol='0'/>
+            <to next-state='go_right' next-symbol='0' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="1"/>
-            <to next-state="go_right" next-symbol="1" movement="right"/>
+            <from current-state='go_right' current-symbol='1'/>
+            <to next-state='go_right' next-symbol='1' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="2"/>
-            <to next-state="go_right" next-symbol="2" movement="right"/>
+            <from current-state='go_right' current-symbol='2'/>
+            <to next-state='go_right' next-symbol='2' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="3"/>
-            <to next-state="go_right" next-symbol="3" movement="right"/>
+            <from current-state='go_right' current-symbol='3'/>
+            <to next-state='go_right' next-symbol='3' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="4"/>
-            <to next-state="go_right" next-symbol="4" movement="right"/>
+            <from current-state='go_right' current-symbol='4'/>
+            <to next-state='go_right' next-symbol='4' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="5"/>
-            <to next-state="go_right" next-symbol="5" movement="right"/>
+            <from current-state='go_right' current-symbol='5'/>
+            <to next-state='go_right' next-symbol='5' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="6"/>
-            <to next-state="go_right" next-symbol="6" movement="right"/>
+            <from current-state='go_right' current-symbol='6'/>
+            <to next-state='go_right' next-symbol='6' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="7"/>
-            <to next-state="go_right" next-symbol="7" movement="right"/>
+            <from current-state='go_right' current-symbol='7'/>
+            <to next-state='go_right' next-symbol='7' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="8"/>
-            <to next-state="go_right" next-symbol="8" movement="right"/>
+            <from current-state='go_right' current-symbol='8'/>
+            <to next-state='go_right' next-symbol='8' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Move to the right of the number. -->
-            <from current-state="go_right" current-symbol="9"/>
-            <to next-state="go_right" next-symbol="9" movement="right"/>
+            <from current-state='go_right' current-symbol='9'/>
+            <to next-state='go_right' next-symbol='9' movement='right'/>
         </mapping>
         <mapping>
 	    <!-- Found the blank that follows the number. 
 		 Change to the increment state and start moving left. -->
-            <from current-state="go_right" current-symbol=" "/>
-            <to next-state="increment" next-symbol=" " movement="left"/>
+            <from current-state='go_right' current-symbol=' '/>
+            <to next-state='increment' next-symbol=' ' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 9 to a 0 and move left. -->
-            <from current-state="increment" current-symbol="9"/>
-            <to next-state="increment" next-symbol="0" movement="left"/>
+            <from current-state='increment' current-symbol='9'/>
+            <to next-state='increment' next-symbol='0' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 0 to a 1. We're done. -->
-            <from current-state="increment" current-symbol="0"/>
-            <to next-state="stop" next-symbol="1" movement="left"/>
+            <from current-state='increment' current-symbol='0'/>
+            <to next-state='stop' next-symbol='1' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the blank to a 1. We're done. -->
-            <from current-state="increment" current-symbol=" "/>
-            <to next-state="stop" next-symbol="1" movement="none"/>
+            <from current-state='increment' current-symbol=' '/>
+            <to next-state='stop' next-symbol='1' movement='none'/>
         </mapping>
         <mapping>
 	    <!-- Change the 1 to a 2. We're done. -->
-            <from current-state="increment" current-symbol="1"/>
-            <to next-state="stop" next-symbol="2" movement="left"/>
+            <from current-state='increment' current-symbol='1'/>
+            <to next-state='stop' next-symbol='2' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 2 to a 3. We're done. -->
-            <from current-state="increment" current-symbol="2"/>
-            <to next-state="stop" next-symbol="3" movement="left"/>
+            <from current-state='increment' current-symbol='2'/>
+            <to next-state='stop' next-symbol='3' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 3 to a 4. We're done. -->
-            <from current-state="increment" current-symbol="3"/>
-            <to next-state="stop" next-symbol="4" movement="left"/>
+            <from current-state='increment' current-symbol='3'/>
+            <to next-state='stop' next-symbol='4' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 4 to a 5. We're done. -->
-            <from current-state="increment" current-symbol="4"/>
-            <to next-state="stop" next-symbol="5" movement="left"/>
+            <from current-state='increment' current-symbol='4'/>
+            <to next-state='stop' next-symbol='5' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 5 to a 6. We're done. -->
-            <from current-state="increment" current-symbol="5"/>
-            <to next-state="stop" next-symbol="6" movement="left"/>
+            <from current-state='increment' current-symbol='5'/>
+            <to next-state='stop' next-symbol='6' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 6 to a 7. We're done. -->
-            <from current-state="increment" current-symbol="6"/>
-            <to next-state="stop" next-symbol="7" movement="left"/>
+            <from current-state='increment' current-symbol='6'/>
+            <to next-state='stop' next-symbol='7' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 7 to a 8. We're done. -->
-            <from current-state="increment" current-symbol="7"/>
-            <to next-state="stop" next-symbol="8" movement="left"/>
+            <from current-state='increment' current-symbol='7'/>
+            <to next-state='stop' next-symbol='8' movement='left'/>
         </mapping>
         <mapping>
 	    <!-- Change the 8 to a 9. We're done. -->
-            <from current-state="increment" current-symbol="8"/>
-            <to next-state="stop" next-symbol="9" movement="left"/>
+            <from current-state='increment' current-symbol='8'/>
+            <to next-state='stop' next-symbol='9' movement='left'/>
         </mapping>
     </transition-function>
 </turing-machine>

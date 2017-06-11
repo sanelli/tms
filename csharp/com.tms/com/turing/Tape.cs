@@ -1,35 +1,39 @@
 using System;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using com.tms.datastruct;
 
 namespace com.tms.turing {
 
-   class Tape<T> {
-      private InfiniteBidirctionalList<T> _tape;
+   public class Tape<TSymbol> : IReadonlyTape<TSymbol> {
+      private readonly InfiniteBidirctionalList<TSymbol> _tape;
       private int _position;
-      TapeItemSerializer<T> _serializer;
+      private readonly SymbolSerializer<TSymbol> _serializer;
+      private readonly int _initialPosition;
 
-      public T Null => _tape.Null;
+      public TSymbol Null => _tape.Null;
 
-      public Tape(TapeItemSerializer<T> serializer, T nullValue = default(T), int position = 0) {
+      public Tape(SymbolSerializer<TSymbol> serializer, TSymbol nullValue = default(TSymbol), int position = 0) {
          _serializer = serializer;
-         _tape = new InfiniteBidirctionalList<T>(nullValue);
+         _tape = new InfiniteBidirctionalList<TSymbol>(nullValue);
          _position = position;
+         _initialPosition = position;
       }
 
       public void FillFromString(string s, int position = 0) { 
          Reset();
          _position = position;
-         var items = s.Split(_serializer.Separator);
+         var items = s.Split(_serializer.Separator).Where(x => !string.IsNullOrEmpty(x));
          foreach(var item in items) { 
             _tape.Append(_serializer.FromString(item));
          }
       }
 
-      public void Set(T item) {
+      public void Set(TSymbol item) {
          _tape[_position] = item;
       }
-      public T Current => _tape[_position];
+      public TSymbol Current => _tape[_position];
 
       public void Shift(MoveAction action, int shift = 1) {
          if(shift < 1)
@@ -47,6 +51,15 @@ namespace com.tms.turing {
       public override string ToString() {
          return $"{_serializer.Separator}{string.Join(_serializer.Separator.ToString(), _tape.Select( i => _serializer.ToString(i)))}{_serializer.Separator}";
       }
+
+      public IEnumerable<TSymbol> CurrentTape => _tape;
+      public int Position => _position;
+
+      public Tape<TSymbol> Clone() {
+         var tape = new Tape<TSymbol>(_serializer, Null, _initialPosition);
+         tape.FillFromString(ToString());
+         return tape;
+       }
 
    }
 
