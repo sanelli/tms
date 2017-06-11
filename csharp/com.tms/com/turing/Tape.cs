@@ -52,6 +52,10 @@ namespace com.tms.turing {
          return $"{_serializer.Separator}{string.Join(_serializer.Separator.ToString(), _tape.Select( i => _serializer.ToString(i)))}{_serializer.Separator}";
       }
 
+      public string ToPlainString(){
+        return string.Join(string.Empty, _tape.Select( i => _serializer.ToString(i)));
+      }
+
       public IEnumerable<TSymbol> CurrentTape => _tape;
       public int Position => _position;
 

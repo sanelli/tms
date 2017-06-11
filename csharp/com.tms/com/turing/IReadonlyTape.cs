@@ -13,5 +13,6 @@ namespace com.tms.turing
       int Position { get; }
       TSymbol Current { get; }
       TSymbol Null { get; }
+      string ToPlainString();
    }
 }

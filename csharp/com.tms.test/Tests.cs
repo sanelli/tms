@@ -216,18 +216,116 @@ private const string ADD_ONE_TM = @"<?xml version='1.0'?>
     </transition-function>
 </turing-machine>";
 
-
-
         [Fact]
-        public void test_load_xml()
+        public void test_add_one_from_string()
         {
-            var table = StatefulTableXMLParser.LoadFromString<string, char>(ADD_ONE_TM,
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromString<string, char>(ADD_ONE_TM, nullValue,
                 new StringStateSerializer(), new CharSymbolSerializer());
-            var tape = new Tape<char>(new CharSymbolSerializer(), ' ');
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
             tape.FillFromString("|4|5|9|");
             var machine = new TuringMachine<string,char>(table, tape);
             machine.Run();
-            Assert.Equal("|4|6|0|", machine.Tape.ToString());
+            Assert.Equal("|4|6|0| |", machine.Tape.ToString());
+        }
+
+        [Fact]
+        public void test_add_one_from_string_2()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromString<string, char>(ADD_ONE_TM, nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|4|5|9|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("460", machine.Tape.ToPlainString().Trim());
+        }
+
+        [Fact]
+        public void test_add_one_from_file()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/add_one_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|4|5|9|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("460", machine.Tape.ToPlainString().Trim());
+         }
+
+        [Fact]
+        public void test_palindrome()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/palindrome_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|0|1|2|1|0|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal(string.Empty, machine.Tape.ToPlainString().Trim());
+        }
+
+        [Fact]
+        public void test_palindrome_2()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/palindrome_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|0|1|2|2|0|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("22", machine.Tape.ToPlainString().Trim());
+        }
+
+        [Fact]
+        public void test_rot13()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/rot13_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|a|b|c|d|e|f|g|h|$|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("nopqrstu$", machine.Tape.ToPlainString().Trim());
+        }
+
+        [Fact]
+        public void test_string_length()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/string_length_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|a|b|a|a|b|b|a|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("7", machine.Tape.ToPlainString().Trim());
+        }
+
+        [Fact]
+        public void test_string_length_2()
+        {
+            const char nullValue = ' ';
+            var table = StatefulTableXMLParser.LoadFromFile<string, char>("../../../../../test/xml/string_length_tm.xml", nullValue,
+                new StringStateSerializer(), new CharSymbolSerializer());
+
+            var tape = new Tape<char>(new CharSymbolSerializer(), nullValue);
+            tape.FillFromString("|a|b|a|a|b|b|a|b|a|b|b|");
+            var machine = new TuringMachine<string,char>(table, tape);
+            machine.Run();
+            Assert.Equal("11", machine.Tape.ToPlainString().Trim());
         }
     }
 }
