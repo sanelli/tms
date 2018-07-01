@@ -1,0 +1,27 @@
+0123456789
+go_right increment stop
+go_right
+stop
+
+go_right 0 go_right 0 right
+go_right 1 go_right 1 right
+go_right 2 go_right 2 right
+go_right 3 go_right 3 right
+go_right 4 go_right 4 right
+go_right 5 go_right 5 right
+go_right 6 go_right 6 right
+go_right 7 go_right 7 right
+go_right 8 go_right 8 right
+go_right 9 go_right 9 right
+go_right # increment # left
+increment 9 increment 0 left
+increment 0 stop 1 left
+increment # stop 1 none
+increment 1 stop 2 none
+increment 2 stop 3 none
+increment 3 stop 4 none
+increment 4 stop 5 none
+increment 5 stop 6 none
+increment 6 stop 7 none
+increment 7 stop 8 none
+increment 8 stop 9 none
